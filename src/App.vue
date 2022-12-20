@@ -17,12 +17,10 @@ export default  {
     NavBar
   },
   async created() {
-    if(!localStorage.getItem('token')) {
-      this.$router.push('/login');
+    if(localStorage.getItem('token')) {
+      const userinfo = await axios.get('user/info');
+      this.$store.dispatch('user', userinfo.data);
     }
-
-    const userinfo = await axios.get('user/info');
-    this.$store.dispatch('user', userinfo.data);
   }
 }
 </script>

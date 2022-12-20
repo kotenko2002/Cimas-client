@@ -5,7 +5,7 @@
       <h4>{{user.name}} {{user.role}}</h4>
     </div>
     <div v-else>
-      <h3>You are log out</h3>
+      <h3>You are not authorized</h3>
     </div>
   </div>
 </template>
@@ -22,5 +22,7 @@ export default {
 </script>
 
 <style scoped>
-
+h3, h4 {
+  text-align: center;
+}
 </style>
