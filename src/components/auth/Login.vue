@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <form @submit.prevent="handleSubmit">
       <h3>Login</h3>
       <div class="form-group">
@@ -45,5 +45,13 @@ export default {
 <style scoped>
   form * {
     margin-bottom: 15px;
+    width: 350px;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
   }
 </style>

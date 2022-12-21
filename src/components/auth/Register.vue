@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="container">
     <form @submit.prevent="handleSubmit">
       <h3>Sing Up</h3>
       <div class="form-group">
         <label>Name</label>
         <input type="text" class="form-control" placeholder="Name" v-model="name">
       </div>
-      <div class="form-group">
+      <div v-if="!getCompanyId" class="form-group">
         <label>Role</label>
         <select class="form-select" v-model="role">
           <option v-for="option in roleOptions" v-bind:value="option.value">
@@ -29,6 +29,7 @@
 
 <script>
 import axios from "axios";
+import {Role} from "@/common/enums/role";
 
 export default {
   name: 'register',
@@ -45,17 +46,30 @@ export default {
       ]
     }
   },
+  mounted() {
+    if(!localStorage.getItem('companyId')
+      && !localStorage.getItem('token')) {
+      this.$router.push('/companyRegister');
+    } else {
+      this.role = Role.CompanyAdmin;
+    }
+
+  },
   methods:{
     async handleSubmit() {
-      const response = await axios.post('/auth/register', {
-        companyId: 1,
+      await axios.post('/auth/register', {
+        companyId: localStorage.getItem('companyId'),
         login: this.login,
         password: this.password,
         name: this.name,
         role: this.role,
       });
 
+      localStorage.removeItem('companyId');
       this.$router.push('/login');
+    },
+    getCompanyId() {
+      return localStorage.getItem('companyId');
     }
   }
 }
@@ -64,5 +78,13 @@ export default {
 <style scoped>
 form * {
   margin-bottom: 15px;
+  width: 350px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
 }
 </style>

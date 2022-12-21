@@ -1,9 +1,7 @@
 <template>
   <nav-bar/>
-  <div class="auth-wrapper">
-    <div class="auth-inner">
-      <router-view/>
-    </div>
+  <div class="temp-wrapper">
+    <router-view/>
   </div>
 </template>
 
@@ -32,7 +30,7 @@ export default  {
   }
 
   body{
-    background: #1C8EF9 !important;
+    background-color: #f5f5f5;
     min-height:  100vh;
     display: flex;
     font-weight: 400;
@@ -42,7 +40,7 @@ export default  {
     font-weight: 500;
   }
 
-  body, html, #app, #root, .auth-wrapper{
+  body, html, #app, #root{
     width: 100%;
     height: 100%;
   }
@@ -51,43 +49,19 @@ export default  {
     text-align: center;
   }
 
-  .navbar-light {
-    background: #ffffff;
-    box-shadow: 0px 14px 80px rgba(24, 25, 58, 0.2);
-  }
-
-  .auth-wrapper {
+  .temp-wrapper {
+    margin-top: 56px;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     text-align: left;
   }
 
-  .auth-inner {
-    min-width: 450px;
-    margin: auto;
-    background: #ffffff;
-    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-    padding: 40px 55px 45px 55px;
-    border-radius: 15px;
-    transition: all .3s;
-  }
-
-  .auth-wrapper .form-control:focus {
-    border-color: #167bff;
-    box-shadow: none;
-  }
-
-  .auth-wrapper h3 {
+  h3 {
     text-align: center;
     margin: 0;
     line-height: 1;
     padding-bottom: 20px;
   }
-
-  .custom-control-label {
-    font-weight: 400;
-  }
-
-
 </style>
