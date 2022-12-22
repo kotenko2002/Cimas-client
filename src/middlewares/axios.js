@@ -35,8 +35,19 @@ axios.interceptors.response.use(
                     errors[key].forEach(item => errorToaster.show(item));
                 }
                 break;
+            case 401:
+                errorToaster.show('You are not authorized');
+                break;
+            case 403:
+                errorToaster.show('You do not have permission to do this');
+                break;
             default:
-                errorToaster.show(error.response.data.message);
+                if(error.response.data.message
+                    === 'An error occurred while updating the entries. See the inner exception for details.') {
+                    errorToaster.show('You cannot delete this entity because other entities use it');
+                } else {
+                    errorToaster.show(error.response.data.message);
+                }
                 break;
         }
         return Promise.reject(error);

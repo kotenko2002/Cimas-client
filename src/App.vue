@@ -50,7 +50,7 @@ export default  {
   }
 
   .temp-wrapper {
-    margin-top: 56px;
+    margin-top: calc(56px + 5%);
     display: flex;
     justify-content: center;
     align-items: center;
