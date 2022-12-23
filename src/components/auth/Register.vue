@@ -6,7 +6,7 @@
         <label>Name</label>
         <input type="text" class="form-control" placeholder="Name" v-model="name">
       </div>
-      <div v-if="!getCompanyId" class="form-group">
+      <div v-if="!getCompanyId()" class="form-group">
         <label>Role</label>
         <select class="form-select" v-model="role">
           <option v-for="option in roleOptions" v-bind:value="option.value">
@@ -53,7 +53,6 @@ export default {
     } else {
       this.role = Role.CompanyAdmin;
     }
-
   },
   methods:{
     async handleSubmit() {
@@ -65,8 +64,13 @@ export default {
         role: this.role,
       });
 
-      localStorage.removeItem('companyId');
-      this.$router.push('/login');
+      if(localStorage.getItem('companyId')) {
+        localStorage.removeItem('companyId');
+        this.$router.push('/login');
+      } else {
+        this.$router.push('/employees');
+      }
+
     },
     getCompanyId() {
       return localStorage.getItem('companyId');

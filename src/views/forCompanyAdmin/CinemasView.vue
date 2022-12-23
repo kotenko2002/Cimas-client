@@ -1,5 +1,5 @@
 <template>
-  <div class="w-75 d-flex justify-content-end">
+  <div class="w-50 d-flex justify-content-end">
     <button
         class="btn btn-primary"
         type="button"
@@ -8,7 +8,7 @@
       Add
     </button>
   </div>
-  <div v-if="displayTable" class="w-75 p-0">
+  <div v-if="displayTable" class="w-50 p-0">
     <table class="table table-striped text-center">
       <thead>
       <tr>
