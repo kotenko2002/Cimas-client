@@ -8,7 +8,7 @@
       <h3>You are not authorized</h3>
     </div>
   </div>
-  <img style="width: 70%" src="https://www.grandsierraresort.com/hubfs/recreation/Grand-Sierra-Cinema-view-of-auditorium_q085_1920x1080.jpg">
+  <img style="width: 50%" src="https://www.grandsierraresort.com/hubfs/recreation/Grand-Sierra-Cinema-view-of-auditorium_q085_1920x1080.jpg">
 </template>
 
 <script>

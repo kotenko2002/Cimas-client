@@ -1,6 +1,6 @@
 <template>
   <nav-bar/>
-  <div class="temp-wrapper">
+  <div class="content-wrapper">
     <router-view/>
   </div>
 </template>
@@ -18,6 +18,10 @@ export default  {
     if(localStorage.getItem('token')) {
       const userinfo = await axios.get('user/info');
       this.$store.dispatch('user', userinfo.data);
+    }
+
+    if(localStorage.getItem('companyId')) {
+      localStorage.removeItem('companyId')
     }
   }
 }
@@ -49,8 +53,9 @@ export default  {
     text-align: center;
   }
 
-  .temp-wrapper {
-    margin-top: 56px;
+  .content-wrapper {
+    margin-top: calc(56px + 5%);
+    padding-bottom: 5%;
     display: flex;
     justify-content: center;
     align-items: center;

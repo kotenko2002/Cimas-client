@@ -3,13 +3,19 @@
     <div class="container">
       <div class="d-flex">
         <router-link to="/" class="navbar-brand">Home</router-link>
-        <div v-if="user">
+        <div v-if="user?.role === 1">
+          <h4>Worker</h4>
+        </div>
+        <div v-else-if="user?.role === 2">
+          <h4>Reviewer</h4>
+        </div>
+        <div v-else-if="user?.role === 3">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a href="#" class="nav-link">Cinemas</a>
+              <router-link to="/cinemas" class="nav-link">Cinemas</router-link>
             </li>
             <li>
-              <a href="#" class="nav-link">Employees</a>
+              <router-link to="/employees" class="nav-link">Employees</router-link>
             </li>
           </ul>
         </div>
@@ -54,7 +60,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    userRole() {
+      return this?.user?.role;
+    }
   }
 }
 </script>
