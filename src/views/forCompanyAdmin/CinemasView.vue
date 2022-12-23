@@ -27,13 +27,6 @@
           <ul class="list-inline m-0">
             <li class="list-inline-item">
               <button
-                  class="btn btn-success btn-sm disabled"
-                  type="button"
-              >
-                Edit</button>
-            </li>
-            <li class="list-inline-item">
-              <button
                   class="btn btn-danger btn-sm"
                   type="button"
                   @click="delCinema(cinema.id)"
@@ -47,7 +40,7 @@
       </tbody>
     </table>
   </div>
-  <div v-else>
+  <div v-else class="mt-5">
     <h3>Your company doesn't have any cinemas</h3>
   </div>
   <modal-window v-model:show="displayModal">

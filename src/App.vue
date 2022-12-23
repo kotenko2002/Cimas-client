@@ -21,6 +21,7 @@ export default  {
     }
 
     if(localStorage.getItem('companyId')) {
+      await axios.delete(`company/del/${localStorage.getItem('companyId')}`);
       localStorage.removeItem('companyId')
     }
   }
