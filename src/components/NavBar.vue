@@ -18,8 +18,18 @@
               <!--<router-link to="/films" class="nav-link">Films</router-link>-->
             </li>
             <li class="d-flex align-items-center">
-              <button @click="displayModal=true" class="btn btn-sm btn-workday">START</button>
-              <!--<router-link to="/films" class="nav-link">Films</router-link>-->
+              <button
+                  v-if="!workday"
+                  @click="displayModal=true"
+                  class="btn btn-sm btn-workday">
+                START
+              </button>
+              <button
+                  v-else
+                  @click="endWorkday"
+                  class="btn btn-sm btn-workday">
+                END
+              </button>
             </li>
           </ul>
         </div>
@@ -116,13 +126,15 @@ export default {
       this.cinemaId = 0;
       const workday = await axios.get('/workday/current');
       this.$store.dispatch('workday', workday.data)
+    },
+    async endWorkday() {
+      await axios.put(`/workday/end/${this.workday.id}`);
+      this.$store.dispatch('workday', null);
     }
   },
   computed: {
     ...mapGetters(['user']),
-    //userRole() {
-    //  return this?.user?.role;
-    //}
+    ...mapGetters(['workday'])
   }
 }
 </script>

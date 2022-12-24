@@ -22,7 +22,7 @@
         <label>Password</label>
         <input type="password" class="form-control" placeholder="Password"  v-model="password">
       </div>
-      <button class="btn btn-primary w-100">Sing up</button>
+      <button class="btn btn-primary w-100">Sign up</button>
     </form>
   </div>
 </template>
