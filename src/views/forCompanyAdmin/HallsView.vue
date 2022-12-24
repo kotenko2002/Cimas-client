@@ -1,5 +1,12 @@
 <template>
-  <div class="w-50 d-flex justify-content-end">
+  <div class="w-50 d-flex justify-content-between">
+    <button
+        class="btn btn-secondary"
+        type="button"
+        @click="$router.push('/cinemas')"
+    >
+      Back
+    </button>
     <button
         class="btn btn-primary"
         type="button"
@@ -14,25 +21,23 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
-        <th scope="col">Adress</th>
+        <th scope="col">Number of seats</th>
         <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="cinema in cinemas" :key="cinema.id">
-        <th scope="row">{{cinema.id}}</th>
-        <td @click="$router.push(`/halls/${cinema.id}`)">
-          <a href="#">{{cinema.name}}</a>
-        </td>
-        <td>{{cinema.adress}}</td>
+      <tr v-for="hall in halls" :key="hall.id">
+        <th scope="row">{{hall.id}}</th>
+        <td>{{hall.name}}</td>
+        <td>{{hall.seatsCount}}</td>
         <td>
           <ul class="list-inline m-0">
             <li class="list-inline-item">
               <button
                   class="btn btn-danger btn-sm"
                   type="button"
-                  @click="delCinema(cinema.id)"
-                >
+                  @click="delHall(hall.id)"
+              >
                 Delete
               </button>
             </li>
@@ -43,17 +48,21 @@
     </table>
   </div>
   <div v-else class="mt-5">
-    <h3>Your company doesn't have any cinemas</h3>
+    <h3>This cinema doesn't have any hall</h3>
   </div>
   <modal-window v-model:show="displayModal">
-    <form  @submit.prevent="addCinema">
+    <form  @submit.prevent="addHall">
       <div class="form-group">
         <label>Name</label>
         <input type="text" class="form-control" placeholder="Name" v-model="name">
       </div>
       <div class="form-group">
-        <label>Adress</label>
-        <input type="text" class="form-control" placeholder="Adress" v-model="adress">
+        <label>Count of rows</label>
+        <input type="number" class="form-control" placeholder="Count of rows" v-model="rows">
+      </div>
+      <div class="form-group">
+        <label>Count of columns</label>
+        <input type="number" class="form-control" placeholder="Count of columns" v-model="columns">
       </div>
       <div class="w-100 d-flex justify-content-end">
         <button class="btn btn-primary w-25 m-0">Add</button>
@@ -67,46 +76,50 @@ import axios from "axios";
 import ModalWindow from "@/components/UI/ModalWindow";
 
 export default {
-  name: 'cinemas-view',
+  name: 'halls-view',
   components: {ModalWindow},
+
   data () {
     return {
-      cinemas: [],
+      halls: [],
       displayModal: false,
       name: '',
-      adress: '',
+      rows: 0,
+      columns: 0,
     }
   },
   async created() {
-    await this.getCinemas();
+    await this.getHalls();
   },
   methods: {
-    async addCinema() {
+    async getHalls() {
+      const response = await axios.get(`/hall/items/${this.$route.params.cinemaId}`);
+      this.halls = response.data;
+    },
+    async addHall() {
       this.displayModal = false;
 
-      await axios.post('/cinema/add', {
+      await axios.post('/hall/add', {
+        cinemaId: this.$route.params.cinemaId,
         name: this.name,
-        adress: this.adress
+        rows: this.rows,
+        columns: this.columns
       });
 
       this.name = '';
-      this.adress = '';
+      this.rows = 0;
+      this.columns = 0;
 
-      await this.getCinemas();
+      await this.getHalls();
     },
-    async delCinema(cinemaId) {
-      await axios.delete(`/cinema/del/${cinemaId}`);
-
-      await this.getCinemas();
-    },
-    async getCinemas() {
-      const response = await axios.get('/cinema/items');
-      this.cinemas = response.data;
+    async delHall(hallId) {
+      await axios.delete(`/hall/del/${hallId}`);
+      await this.getHalls();
     }
   },
   computed: {
     displayTable() {
-      return this.cinemas.length > 0;
+      return this.halls.length > 0;
     }
   }
 }

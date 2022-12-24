@@ -51,7 +51,7 @@
       </div>
       <div class="form-group">
         <label>Duration</label>
-        <input type="text" class="form-control" placeholder="Duration" v-model="duration">
+        <input type="number" class="form-control" placeholder="Duration" v-model="duration">
       </div>
       <div class="w-100 d-flex justify-content-end">
         <button class="btn btn-primary w-25 m-0">Add</button>
@@ -73,7 +73,7 @@ export default {
       films: [],
       displayModal: false,
       name: '',
-      duration: null
+      duration: 0
     }
   },
   async created() {
@@ -85,9 +85,6 @@ export default {
       this.films = response.data;
     },
     async addFilm() {
-      if(this.duration === null || !+this.duration) {
-        return;
-      }
       this.displayModal = false;
 
       await axios.post('/film/add', {
@@ -96,14 +93,12 @@ export default {
       });
 
       this.name = '';
-      this.duration = null;
+      this.duration = 0;
 
       await this.getFilm();
     },
     async delFilm(filmId) {
-      console.log('del film')
-      console.log(filmId)
-
+      await axios.delete(`/film/items/${filmId}`);
       await this.getFilm();
     }
   },
