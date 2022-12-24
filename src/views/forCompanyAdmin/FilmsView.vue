@@ -98,7 +98,7 @@ export default {
       await this.getFilm();
     },
     async delFilm(filmId) {
-      await axios.delete(`/film/items/${filmId}`);
+      await axios.delete(`/film/del/${filmId}`);
       await this.getFilm();
     }
   },
