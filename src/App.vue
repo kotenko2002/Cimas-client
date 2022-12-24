@@ -18,6 +18,15 @@ export default  {
     if(localStorage.getItem('token')) {
       const userinfo = await axios.get('user/info');
       this.$store.dispatch('user', userinfo.data);
+
+      if(userinfo.data.role === 1){
+        const hasNotFinishedWorkday = await axios.get('/workday/userHaveNotFinished');
+
+        if(hasNotFinishedWorkday.data) {
+          const workday = await axios.get('/workday/current');
+          this.$store.dispatch('workday', workday.data)
+        }
+      }
     }
 
     if(localStorage.getItem('companyId')) {

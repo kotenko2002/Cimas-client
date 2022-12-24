@@ -46,7 +46,7 @@
     <h3>Your company doesn't have any cinemas</h3>
   </div>
   <modal-window v-model:show="displayModal">
-    <form  @submit.prevent="addCinema">
+    <form @submit.prevent="addCinema">
       <div class="form-group">
         <label>Name</label>
         <input type="text" class="form-control" placeholder="Name" v-model="name">

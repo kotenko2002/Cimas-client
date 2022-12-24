@@ -36,6 +36,16 @@ export default {
 
       const userInfo = await axios.get('user/info');
       this.$store.dispatch('user', userInfo.data)
+
+      if(userInfo.data.role === 1){
+        const hasNotFinishedWorkday = await axios.get('/workday/userHaveNotFinished');
+
+        if(hasNotFinishedWorkday.data) {
+          const workday = await axios.get('/workday/current');
+          this.$store.dispatch('workday', workday.data)
+        }
+      }
+
       this.$router.push('/');
     }
   }
