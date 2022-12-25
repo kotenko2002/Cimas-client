@@ -5,22 +5,23 @@
         <router-link to="/" class="navbar-brand">Home</router-link>
         <div v-if="user?.role === 1">
           <ul class="navbar-nav ml-auto">
-            <li>
-              <a href="#" class="nav-link">Bar</a>
-              <!--<router-link to="/employees" class="nav-link">Employees</router-link>-->
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Tickets</a>
-              <!--<router-link to="/cinemas" class="nav-link">Cinemas</router-link>-->
-            </li>
-            <li>
-              <a href="#" class="nav-link">Schedule</a>
-              <!--<router-link to="/films" class="nav-link">Films</router-link>-->
-            </li>
+            <div v-if="workday" class="d-flex">
+              <li>
+                <router-link to="/products" class="nav-link">Bar</router-link>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Tickets</a>
+                <!--<router-link to="/cinemas" class="nav-link">Cinemas</router-link>-->
+              </li>
+              <li>
+                <a href="#" class="nav-link">Schedule</a>
+                <!--<router-link to="/films" class="nav-link">Films</router-link>-->
+              </li>
+            </div>
             <li class="d-flex align-items-center">
               <button
                   v-if="!workday"
-                  @click="displayModal=true"
+                  @click="openStartModal"
                   class="btn btn-sm btn-workday">
                 START
               </button>
@@ -96,8 +97,9 @@ export default {
   name: 'nav-bar',
   components: {ModalWindow},
   async mounted() {
-    const response = await axios.get('/cinema/items');
-    this.options = response.data;
+    if(this.user?.role === 1) {
+
+    }
   },
   data() {
     return {
@@ -116,6 +118,11 @@ export default {
     getCompanyId() {
       return localStorage.getItem('companyId');
     },
+    async openStartModal() {
+      this.displayModal = true;
+      const response = await axios.get('/cinema/items');
+      this.options = response.data;
+    },
     async startWorkday() {
       this.displayModal = false;
 
@@ -130,6 +137,7 @@ export default {
     async endWorkday() {
       await axios.put(`/workday/end/${this.workday.id}`);
       this.$store.dispatch('workday', null);
+      this.$router.push('/');
     }
   },
   computed: {
