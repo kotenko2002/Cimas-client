@@ -9,13 +9,8 @@
               <li>
                 <router-link to="/products" class="nav-link">Bar</router-link>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">Tickets</a>
-                <!--<router-link to="/cinemas" class="nav-link">Cinemas</router-link>-->
-              </li>
               <li>
-                <a href="#" class="nav-link">Schedule</a>
-                <!--<router-link to="/films" class="nav-link">Films</router-link>-->
+                <router-link to="/sessions" class="nav-link">Schedule</router-link>
               </li>
             </div>
             <li class="d-flex align-items-center">
