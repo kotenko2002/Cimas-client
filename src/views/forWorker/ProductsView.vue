@@ -3,6 +3,7 @@
     <button
         class="btn btn-primary"
         type="button"
+        @click="displayModal=true"
     >
       Add
     </button>
@@ -43,7 +44,7 @@
               <button
                   class="btn btn-danger btn-sm"
                   type="button"
-                  @click="delFilm(film.id)"
+                  @click="delProduct(product.id)"
               >
                 Delete
               </button>
@@ -58,6 +59,7 @@
     <button
         class="btn btn-secondary"
         type="button"
+        @click="saveChanges"
     >
       Save changes
     </button>
@@ -65,14 +67,32 @@
   <div v-else class="mt-5">
     <h3>Your cinema doesn't have any products</h3>
   </div>
+  <modal-window v-model:show="displayModal">
+    <form @submit.prevent="addProduct">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" placeholder="Name" v-model="name">
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input type="number" step="0.1" class="form-control" placeholder="Price" v-model="price">
+      </div>
+      <div class="w-100 d-flex justify-content-end">
+        <button class="btn btn-primary w-25 m-0">Add</button>
+      </div>
+    </form>
+  </modal-window>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import axios from "axios";
+import ModalWindow from "@/components/UI/ModalWindow";
 
 export default {
   name: 'products-view',
+  components: {ModalWindow},
+
   data () {
     return {
       products: [],
@@ -91,6 +111,37 @@ export default {
 
       const response = await axios.get(`/product/items/${workdayId}`);
       this.products = response.data;
+    },
+    async addProduct() {
+      this.displayModal = false;
+      await axios.post('/product/add',{
+        workDayId: this.workday?.id,
+        name: this.name,
+        price: this.price
+      });
+
+      this.name = '';
+      this.price = 0;
+
+      await this.getProducts(this.workday?.id);
+    },
+    async delProduct(productId) {
+      await axios.delete(`/product/del/${productId}`);
+      await this.getProducts(this.workday?.id);
+    },
+    async saveChanges() {
+      const models = this.products.filter(product => product.changed === true)
+          .map(function (item, index, array) {
+              return {
+                  Id: item.id,
+                  Price: item.price,
+                  SoldAmount : item.soldAmount,
+                  Incoming : item.incoming
+              }
+          });
+
+      await axios.put('/product/items/edit', models);
+      await this.getProducts(this.workday?.id);
     }
   },
   computed: {
@@ -111,5 +162,8 @@ export default {
 </script>
 
 <style scoped>
-
+form * {
+  margin-bottom: 15px;
+  width: 350px;
+}
 </style>
