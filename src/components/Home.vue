@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="user">
-      <h3>You are log in</h3>
+      <h3>You are log in as</h3>
       <h4>{{user.name}}</h4>
     </div>
     <div v-else>
