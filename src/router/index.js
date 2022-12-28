@@ -9,6 +9,7 @@ import FilmsView from "@/views/forCompanyAdmin/FilmsView";
 import HallsView from "@/views/forCompanyAdmin/HallsView";
 import ProductsView from "@/views/forWorker/ProductsView";
 import sessionsView from "@/views/forWorker/SessionsView";
+import sessionView from "@/views/forWorker/SessionView";
 
 const routes = [
   { path: '/', component: Home },
@@ -24,6 +25,7 @@ const routes = [
 
   { path: '/products', component: ProductsView },
   { path: '/sessions', component: sessionsView },
+  { path: '/session/:sessionId', component: sessionView },
 ]
 
 const router = createRouter({

@@ -38,7 +38,7 @@
             </thead>
             <tbody>
             <tr v-for="session in sessions" :key="session.id">
-              <th scope="row">
+              <th scope="row" @click="$router.push(`/session/${session.id}`)">
                 <a href="#">{{session.id}}</a>
               </th>
               <td>{{session.filmName}}</td>
