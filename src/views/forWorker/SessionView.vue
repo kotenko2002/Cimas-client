@@ -71,7 +71,6 @@ export default {
           }
         });
       }
-      console.log(models);
       await axios.put('/session/seat/changeStatus', models);
       await this.getSeats();
     }

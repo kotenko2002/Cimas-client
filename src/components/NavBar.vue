@@ -30,7 +30,11 @@
           </ul>
         </div>
         <div v-else-if="user?.role === 2">
-          <h4>Reviewer</h4>
+          <ul class="navbar-nav ml-auto">
+            <li>
+              <router-link to="/reports" class="nav-link">Reports</router-link>
+            </li>
+          </ul>
         </div>
         <div v-else-if="user?.role === 3">
           <ul class="navbar-nav ml-auto">
@@ -91,11 +95,6 @@ import axios from "axios";
 export default {
   name: 'nav-bar',
   components: {ModalWindow},
-  async mounted() {
-    if(this.user?.role === 1) {
-
-    }
-  },
   data() {
     return {
       displayModal: false,

@@ -38,8 +38,13 @@
             </thead>
             <tbody>
             <tr v-for="session in sessions" :key="session.id">
-              <th scope="row" @click="$router.push(`/session/${session.id}`)">
-                <a href="#">{{session.id}}</a>
+              <th scope="row">
+                <span
+                    style="cursor: pointer"
+                    @click="$router.push(`/session/${session.id}`)"
+                >
+                  ℹ
+                </span>
               </th>
               <td>{{session.filmName}}</td>
               <td>{{session.ticketPrice}}</td>
