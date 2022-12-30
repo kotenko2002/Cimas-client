@@ -80,4 +80,9 @@ export default  {
     line-height: 1;
     padding-bottom: 20px;
   }
+
+  .content-container {
+    width: 80%;
+    max-width: 600px;
+  }
 </style>

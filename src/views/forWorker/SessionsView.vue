@@ -1,77 +1,77 @@
 <template>
-  <div class="w-75 d-flex justify-content-end">
-    <button
-        class="btn btn-primary"
-        type="button"
-        @click="displayModal=true"
-    >
-      Add
-    </button>
-  </div>
-  <div class="w-75 d-flex justify-content-center">
-    <div class="w-100 d-flex justify-content-center flex-wrap">
-      <div class="form m-5">
-        <div class="form-group">
-          <label>Hall</label>
-          <select class="form-select" v-model="hallId">
-            <option v-for="option in halls" v-bind:value="option.id">
-              {{ option.name }}
-            </option>
-          </select>
+    <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center flex-wrap">
+        <div class="form m-5">
+          <div class="form-group">
+            <label>Hall</label>
+            <select class="form-select" v-model="hallId">
+              <option v-for="option in halls" v-bind:value="option.id">
+                {{ option.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" class="form-control" v-model="date">
+          </div>
         </div>
-        <div class="form-group">
-          <label>Date</label>
-          <input type="date" class="form-control" v-model="date">
-        </div>
-      </div>
-      <div class="w-75">
-        <div v-if="displayTable">
-          <table class="table table-striped text-center">
-            <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Film name</th>
-              <th scope="col">Ticket price</th>
-              <th scope="col">Time</th>
-              <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="session in sessions" :key="session.id">
-              <th scope="row">
+        <div class="m-5">
+          <div class="d-flex justify-content-end mb-5">
+            <button
+                class="btn btn-primary"
+                type="button"
+                @click="displayModal=true"
+            >
+              Add
+            </button>
+          </div>
+          <div v-if="displayTable">
+            <table class="table table-striped text-center">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Film name</th>
+                <th scope="col">Ticket price</th>
+                <th scope="col">Time</th>
+                <th scope="col"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="session in sessions" :key="session.id">
+                <th scope="row">
                 <span
                     style="cursor: pointer"
                     @click="$router.push(`/session/${session.id}`)"
                 >
                   ℹ
                 </span>
-              </th>
-              <td>{{session.filmName}}</td>
-              <td>{{session.ticketPrice}}</td>
-              <td>{{session.startTime}} - {{session.endTime}}</td>
-              <td>
-                <ul class="list-inline m-0">
-                  <li class="list-inline-item">
-                    <button
-                        class="btn btn-danger btn-sm m-1"
-                        type="button"
-                        @click="delSession(session.id)"
-                    >
-                      Delete
-                    </button>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div v-else class="mt-5">
-          <h3>No sessions</h3>
+                </th>
+                <td>{{session.filmName}}</td>
+                <td>{{session.ticketPrice}}</td>
+                <td>{{session.startTime}} - {{session.endTime}}</td>
+                <td>
+                  <ul class="list-inline m-0">
+                    <li class="list-inline-item">
+                      <button
+                          class="btn btn-danger btn-sm m-1"
+                          type="button"
+                          @click="delSession(session.id)"
+                      >
+                        Delete
+                      </button>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="m-5">
+            <h3>No sessions</h3>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   <modal-window v-model:show="displayModal">
     <form @submit.prevent="addSession">
       <div class="form-group">

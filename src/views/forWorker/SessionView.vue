@@ -1,41 +1,44 @@
 <template>
-  <div class="w-50 d-flex justify-content-between">
-    <button
-        class="btn btn-secondary"
-        type="button"
-        @click="$router.push('/sessions')"
-    >
-      Back
-    </button>
-    <button
-        v-if="displaySeats"
-        class="btn btn-primary"
-        type="button"
-        @click="saveChanges"
-    >
-      Save changes
-    </button>
-  </div>
-  <div class="w-50">
-
-    <div v-if="displaySeats" class="d-flex justify-content-center">
-      <div class="border mt-2" style="overflow-x: auto;">
-        <div v-for="row in seats" class="d-flex">
-          <div
-              v-for="seat in row" :key="seat.id"
-              class="seat d-flex justify-content-center align-items-center"
-              :class="{free: seat.status === 1,
-                booked: seat.status === 2,
-                occupied: seat.status === 3}"
-              @click="seat.status = (seat.status === 3) ? 1 : seat.status + 1; seat.changed = true"
-          >
-            <h4 class="user-select-none">{{seat.column + 1}}</h4>
+  <div class="content-container">
+    <div class="d-flex justify-content-between mb-5">
+      <button
+          class="btn btn-secondary"
+          type="button"
+          @click="$router.push('/sessions')"
+      >
+        Back
+      </button>
+    </div>
+    <div class="border">
+      <div v-if="displaySeats" class="d-flex justify-content-center">
+        <div class="m-2" style="overflow-x: auto;">
+          <div v-for="row in seats" class="d-flex">
+            <div
+                v-for="seat in row" :key="seat.id"
+                class="seat d-flex justify-content-center align-items-center"
+                :class="{free: seat.status === 1,
+                  booked: seat.status === 2,
+                  occupied: seat.status === 3}"
+                @click="seat.status = (seat.status === 3) ? 1 : seat.status + 1; seat.changed = true"
+            >
+              <h4 class="user-select-none">{{seat.column + 1}}</h4>
+            </div>
           </div>
         </div>
       </div>
+      <div v-else class="">
+        <h3>Loading...</h3>
+      </div>
     </div>
-    <div v-else class="">
-      <h3>Loading...</h3>
+    <div class="d-flex justify-content-end mt-5">
+      <button
+          v-if="displaySeats"
+          class="btn btn-primary"
+          type="button"
+          @click="saveChanges"
+      >
+        Save changes
+      </button>
     </div>
   </div>
 </template>

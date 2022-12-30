@@ -1,47 +1,49 @@
 <template>
-  <div class="w-50 d-flex justify-content-end">
-    <button
-        class="btn btn-primary"
-        type="button"
-        @click="displayModal=true"
-    >
-      Add
-    </button>
-  </div>
-  <div v-if="displayTable" class="w-50 p-0">
-    <table class="table table-striped text-center">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Duration</th>
-        <th scope="col"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="film in films" :key="film.id">
-        <th scope="row">{{film.id}}</th>
-        <td>{{film.name}}</td>
-        <td>{{film.duration}}</td>
-        <td>
-          <ul class="list-inline m-0">
-            <li class="list-inline-item">
-              <button
-                  class="btn btn-danger btn-sm"
-                  type="button"
-                  @click="delFilm(film.id)"
-              >
-                Delete
-              </button>
-            </li>
-          </ul>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div v-else class="mt-5">
-    <h3>Your company doesn't have any film</h3>
+  <div class="content-container">
+    <div class="d-flex justify-content-end mb-5">
+      <button
+          class="btn btn-primary"
+          type="button"
+          @click="displayModal=true"
+      >
+        Add
+      </button>
+    </div>
+    <div v-if="displayTable" class="p-0">
+      <table class="table table-striped text-center">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Duration</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="film in films" :key="film.id">
+          <th scope="row">{{film.id}}</th>
+          <td>{{film.name}}</td>
+          <td>{{film.duration}}</td>
+          <td>
+            <ul class="list-inline m-0">
+              <li class="list-inline-item">
+                <button
+                    class="btn btn-danger btn-sm"
+                    type="button"
+                    @click="delFilm(film.id)"
+                >
+                  Delete
+                </button>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-else>
+      <h3>Your company doesn't have any film</h3>
+    </div>
   </div>
   <modal-window v-model:show="displayModal">
     <form  @submit.prevent="addFilm">

@@ -1,71 +1,73 @@
 <template>
-  <div class="w-50 d-flex justify-content-end">
-    <button
-        class="btn btn-primary"
-        type="button"
-        @click="displayModal=true"
-    >
-      Add
-    </button>
-  </div>
-  <div v-if="displayTable" class="w-50 p-0">
-    <table class="table table-striped text-center">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Sold</th>
-        <th scope="col">Incomed</th>
-        <th scope="col"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="product in products" :key="product.id">
-        <th scope="row">{{product.id}}</th>
-        <td>{{product.name}}</td>
-        <td>{{product.price}}</td>
-        <td>{{product.amount}}</td>
+  <div class="content-container">
+    <div class="d-flex justify-content-end mb-5">
+      <button
+          class="btn btn-primary"
+          type="button"
+          @click="displayModal=true"
+      >
+        Add
+      </button>
+    </div>
+    <div v-if="displayTable" class="p-0">
+      <table class="table table-striped text-center">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Sold</th>
+          <th scope="col">Yield</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="product in products" :key="product.id">
+          <th scope="row">{{product.id}}</th>
+          <td>{{product.name}}</td>
+          <td>{{product.price}}</td>
+          <td>{{product.amount}}</td>
 
-        <td>
-          <span class="btn btn-sm" @click="product.soldAmount--; product.changed=true">➖</span>
-           {{product.soldAmount}}
-          <span class="btn btn-sm" @click="product.soldAmount++; product.changed=true">➕</span>
-        </td>
-        <td>
-          <span class="btn btn-sm" @click="product.incoming--; product.changed=true">➖</span>
-          {{product.incoming}}
-          <span class="btn btn-sm" @click="product.incoming++; product.changed=true">➕</span>
-        </td>
-        <td>
-          <ul class="list-inline m-0">
-            <li class="list-inline-item">
-              <button
-                  class="btn btn-danger btn-sm"
-                  type="button"
-                  @click="delProduct(product.id)"
-              >
-                Delete
-              </button>
-            </li>
-          </ul>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div v-if="displayTable" class="w-50 d-flex justify-content-end">
-    <button
-        class="btn btn-secondary"
-        type="button"
-        @click="saveChanges"
-    >
-      Save changes
-    </button>
-  </div>
-  <div v-else class="mt-5">
-    <h3>Your cinema doesn't have any products</h3>
+          <td>
+            <span class="btn btn-sm" @click="product.soldAmount--; product.changed=true">➖</span>
+            {{product.soldAmount}}
+            <span class="btn btn-sm" @click="product.soldAmount++; product.changed=true">➕</span>
+          </td>
+          <td>
+            <span class="btn btn-sm" @click="product.incoming--; product.changed=true">➖</span>
+            {{product.incoming}}
+            <span class="btn btn-sm" @click="product.incoming++; product.changed=true">➕</span>
+          </td>
+          <td>
+            <ul class="list-inline m-0">
+              <li class="list-inline-item">
+                <button
+                    class="btn btn-danger btn-sm"
+                    type="button"
+                    @click="delProduct(product.id)"
+                >
+                  Delete
+                </button>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-if="displayTable" class="d-flex justify-content-end mt-5">
+      <button
+          class="btn btn-secondary"
+          type="button"
+          @click="saveChanges"
+      >
+        Save changes
+      </button>
+    </div>
+    <div v-else class="m-5">
+      <h3>Your cinema doesn't have any products</h3>
+    </div>
   </div>
   <modal-window v-model:show="displayModal">
     <form @submit.prevent="addProduct">
@@ -165,5 +167,9 @@ export default {
 form * {
   margin-bottom: 15px;
   width: 350px;
+}
+
+.content-container {
+  width: 100%;
 }
 </style>
