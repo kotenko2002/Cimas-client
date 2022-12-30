@@ -9,7 +9,7 @@
         Add
       </button>
     </div>
-    <div v-if="displayTable" class="p-0">
+    <div v-if="displayTable" class="p-0 m-2" style="overflow: auto">
       <table class="table table-striped text-center">
         <thead>
         <tr>
