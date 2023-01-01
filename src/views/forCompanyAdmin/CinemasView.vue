@@ -13,7 +13,7 @@
       <table class="table table-striped text-center">
         <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col"></th>
           <th scope="col">Name</th>
           <th scope="col">Adress</th>
           <th scope="col"></th>
@@ -21,10 +21,15 @@
         </thead>
         <tbody>
         <tr v-for="cinema in cinemas" :key="cinema.id">
-          <th scope="row">{{cinema.id}}</th>
-          <td>
-            <a href="#" @click="$router.push(`/halls/${cinema.id}`)">{{cinema.name}}</a>
-          </td>
+          <th scope="row">
+            <span
+                style="cursor: pointer"
+                @click="$router.push(`/halls/${cinema.id}`)"
+            >
+                  ℹ
+                </span>
+          </th>
+          <td>{{cinema.name}}</td>
           <td>{{cinema.adress}}</td>
           <td>
             <ul class="list-inline m-0">
@@ -32,7 +37,7 @@
                 <button
                     class="btn btn-danger btn-sm"
                     type="button"
-                    @click="delCinema(cinema.id)"
+                    @click="dialogModal.status = true; dialogModal.delCinemaId = cinema.id"
                 >
                   Delete
                 </button>
@@ -62,21 +67,32 @@
       </div>
     </form>
   </modal-window>
+  <confirm-modal
+      :show="dialogModal.status"
+      @update:show="dialogModal.status = false; dialogModal.delCinemaId = null;"
+      @action="delCinema(dialogModal.delCinemaId)">
+    delete this cinema
+  </confirm-modal>
 </template>
 
 <script>
 import axios from "axios";
 import ModalWindow from "@/components/UI/ModalWindow";
+import ConfirmModal from "@/components/UI/ConfirmModal";
 
 export default {
   name: 'cinemas-view',
-  components: {ModalWindow},
+  components: {ModalWindow, ConfirmModal},
   data () {
     return {
       cinemas: [],
       displayModal: false,
       name: '',
       adress: '',
+      dialogModal: {
+        status: false,
+        delCinemaId: null,
+      }
     }
   },
   async created() {

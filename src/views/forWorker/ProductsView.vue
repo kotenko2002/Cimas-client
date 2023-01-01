@@ -9,11 +9,10 @@
         Add
       </button>
     </div>
-    <div v-if="displayTable" class="p-0 m-2" style="overflow: auto">
+    <div v-if="displayTable" style="overflow: auto">
       <table class="table table-striped text-center">
         <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Price</th>
           <th scope="col">Amount</th>
@@ -24,7 +23,6 @@
         </thead>
         <tbody>
         <tr v-for="product in products" :key="product.id">
-          <th scope="row">{{product.id}}</th>
           <td>{{product.name}}</td>
           <td>{{product.price}}</td>
           <td>{{product.amount}}</td>
@@ -45,7 +43,7 @@
                 <button
                     class="btn btn-danger btn-sm"
                     type="button"
-                    @click="delProduct(product.id)"
+                    @click="dialogModal.delProductId = product.id; dialogModal.status = true"
                 >
                   Delete
                 </button>
@@ -84,23 +82,34 @@
       </div>
     </form>
   </modal-window>
+  <confirm-modal
+      :show="dialogModal.status"
+      @update:show="this.dialogModal.status = false; this.dialogModal.delProductId = null;"
+      @action="delProduct(dialogModal.delProductId)">
+    delete this product
+  </confirm-modal>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import axios from "axios";
 import ModalWindow from "@/components/UI/ModalWindow";
+import ConfirmModal from "@/components/UI/ConfirmModal";
 
 export default {
   name: 'products-view',
-  components: {ModalWindow},
+  components: {ConfirmModal, ModalWindow},
 
   data () {
     return {
       products: [],
       displayModal: false,
       name: '',
-      price: 0
+      price: 0,
+      dialogModal: {
+        status: false,
+        delProductId: null,
+      }
     }
   },
   async mounted() {
@@ -144,7 +153,7 @@ export default {
 
       await axios.put('/product/items/edit', models);
       await this.getProducts(this.workday?.id);
-    }
+    },
   },
   computed: {
     ...mapGetters(['workday']),
@@ -167,9 +176,5 @@ export default {
 form * {
   margin-bottom: 15px;
   width: 350px;
-}
-
-.content-container {
-  width: 100%;
 }
 </style>

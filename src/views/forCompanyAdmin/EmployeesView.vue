@@ -13,7 +13,6 @@
       <table class="table table-striped text-center">
         <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Role</th>
           <th scope="col"></th>
@@ -21,7 +20,6 @@
         </thead>
         <tbody>
         <tr v-for="employee in employeesWithRole" :key="employee.id">
-          <th scope="row">{{employee.id}}</th>
           <td>{{employee.name}}</td>
           <td>{{employee.role}}</td>
           <td>
@@ -30,7 +28,7 @@
                 <button
                     class="btn btn-danger btn-sm m-1"
                     type="button"
-                    @click="fireEmployee(employee.id)"
+                    @click="dialogModal.status = true; dialogModal.fireEmployeeId = employee.id"
                 >
                   Fire
                 </button>
@@ -45,17 +43,30 @@
       <h3>Your company doesn't have any employee</h3>
     </div>
   </div>
+  <confirm-modal
+      :show="dialogModal.status"
+      :type="'fire'"
+      @update:show="dialogModal.status = false; dialogModal.fireEmployeeId = null"
+      @action="fireEmployee(dialogModal.fireEmployeeId)">
+    fire this employee
+  </confirm-modal>
 </template>
 
 <script>
 import {Role, RoleConverter} from "@/common/enums/role";
 import axios from "axios";
+import ConfirmModal from "@/components/UI/ConfirmModal";
 
 export default {
   name: 'employees-view',
+  components: {ConfirmModal},
   data () {
     return {
-      employees: []
+      employees: [],
+      dialogModal: {
+        status: false,
+        fireEmployeeId: null,
+      }
     }
   },
   async mounted() {

@@ -20,7 +20,6 @@
       <table class="table table-striped text-center">
         <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Number of seats</th>
           <th scope="col"></th>
@@ -28,7 +27,6 @@
         </thead>
         <tbody>
         <tr v-for="hall in halls" :key="hall.id">
-          <th scope="row">{{hall.id}}</th>
           <td>{{hall.name}}</td>
           <td>{{hall.seatsCount}}</td>
           <td>
@@ -37,7 +35,7 @@
                 <button
                     class="btn btn-danger btn-sm"
                     type="button"
-                    @click="delHall(hall.id)"
+                    @click="dialogModal.status = true; dialogModal.delHallId = hall.id"
                 >
                   Delete
                 </button>
@@ -71,15 +69,22 @@
       </div>
     </form>
   </modal-window>
+  <confirm-modal
+      :show="dialogModal.status"
+      @update:show="this.dialogModal.status = false; this.dialogModal.delHallId = null;"
+      @action="delHall(dialogModal.delHallId)">
+    delete this hall
+  </confirm-modal>
 </template>
 
 <script>
 import axios from "axios";
 import ModalWindow from "@/components/UI/ModalWindow";
+import ConfirmModal from "@/components/UI/ConfirmModal";
 
 export default {
   name: 'halls-view',
-  components: {ModalWindow},
+  components: {ModalWindow, ConfirmModal},
 
   data () {
     return {
@@ -88,6 +93,10 @@ export default {
       name: '',
       rows: 0,
       columns: 0,
+      dialogModal: {
+        status: false,
+        delHallId: null,
+      }
     }
   },
   async created() {

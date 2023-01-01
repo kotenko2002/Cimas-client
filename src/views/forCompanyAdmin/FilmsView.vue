@@ -13,7 +13,6 @@
       <table class="table table-striped text-center">
         <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Duration</th>
           <th scope="col"></th>
@@ -21,7 +20,6 @@
         </thead>
         <tbody>
         <tr v-for="film in films" :key="film.id">
-          <th scope="row">{{film.id}}</th>
           <td>{{film.name}}</td>
           <td>{{film.duration}}</td>
           <td>
@@ -30,7 +28,7 @@
                 <button
                     class="btn btn-danger btn-sm"
                     type="button"
-                    @click="delFilm(film.id)"
+                    @click="dialogModal.status = true; dialogModal.delFilmId = film.id"
                 >
                   Delete
                 </button>
@@ -60,22 +58,33 @@
       </div>
     </form>
   </modal-window>
+  <confirm-modal
+      :show="dialogModal.status"
+      @update:show="dialogModal.status = false; dialogModal.delFilmId = null"
+      @action="delFilm(dialogModal.delFilmId)">
+    delete this film
+  </confirm-modal>
 </template>
 
 <script>
 import axios from "axios";
 import ModalWindow from "@/components/UI/ModalWindow";
+import ConfirmModal from "@/components/UI/ConfirmModal";
 
 export default {
   name: 'films-view',
-  components: {ModalWindow},
+  components: {ModalWindow, ConfirmModal},
 
   data () {
     return {
       films: [],
       displayModal: false,
       name: '',
-      duration: 0
+      duration: 0,
+      dialogModal: {
+        status: false,
+        delFilmId: null,
+      }
     }
   },
   async created() {

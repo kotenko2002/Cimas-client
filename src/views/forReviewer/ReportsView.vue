@@ -16,7 +16,7 @@
           <table class="table table-striped text-center">
             <thead>
             <tr>
-              <th scope="col">#</th>
+              <th scope="col"></th>
               <th scope="col">Time</th>
               <th scope="col">Status</th>
             </tr>
@@ -27,8 +27,6 @@
                 <span
                     style="cursor: pointer"
                     @click="openModal(report.id)">
-                    <!--@click="$router.push(`/report/${report.id}`)"-->
-
                   ℹ
                 </span>
               </th>
@@ -95,7 +93,7 @@
               <span class="name">Worker name: </span>{{report.workerName}}
             </div>
             <div>
-              <span class="name">Profit: </span>{{report.profit}}грн
+              <span class="name">Profit: </span>{{report.profit}} c.u.
             </div>
             <div>
               <span class="name">shift start time: </span>{{report.startDateTime}}
@@ -269,7 +267,6 @@ export default {
 
 .form-select {
   display: inline-block;
-  width: auto;
 }
 
 .rounded {

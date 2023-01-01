@@ -29,7 +29,7 @@
             <table class="table table-striped text-center">
               <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col"></th>
                 <th scope="col">Film name</th>
                 <th scope="col">Ticket price</th>
                 <th scope="col">Time</th>
@@ -55,7 +55,7 @@
                       <button
                           class="btn btn-danger btn-sm m-1"
                           type="button"
-                          @click="delSession(session.id)"
+                          @click="this.dialogModal.status = true; dialogModal.delSessionId = session.id;"
                       >
                         Delete
                       </button>
@@ -103,16 +103,23 @@
       </div>
     </form>
   </modal-window>
+  <confirm-modal
+      :show="dialogModal.status"
+      @update:show="dialogModal.status = false; dialogModal.delSessionId = null;"
+      @action="delSession(dialogModal.delSessionId)">
+    delete this session
+  </confirm-modal>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import axios from "axios";
 import ModalWindow from "@/components/UI/ModalWindow";
+import ConfirmModal from "@/components/UI/ConfirmModal";
 
 export default {
   name: 'sessions-view',
-  components: {ModalWindow},
+  components: {ModalWindow,ConfirmModal},
   data() {
     return {
       sessions: [],
@@ -124,6 +131,10 @@ export default {
       displayModal: false,
       ticketPrice: 0,
       startDateTime: null,
+      dialogModal: {
+        status: false,
+        delSessionId: null,
+      }
     }
   },
   async mounted() {

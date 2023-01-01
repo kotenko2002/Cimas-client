@@ -22,7 +22,7 @@
               </button>
               <button
                   v-else
-                  @click="endWorkday"
+                  @click="dialogModal=true"
                   class="btn btn-sm btn-workday">
                 END
               </button>
@@ -85,21 +85,30 @@
       </div>
     </form>
   </modal-window>
+  <confirm-modal
+      :show="dialogModal"
+      :type="'confirm'"
+      @update:show="this.dialogModal = false"
+      @action="endWorkday">
+    finish your workday
+  </confirm-modal>
 </template>
 
 <script>
 import {mapGetters} from 'vuex';
 import ModalWindow from "@/components/UI/ModalWindow";
 import axios from "axios";
+import ConfirmModal from "@/components/UI/ConfirmModal";
 
 export default {
   name: 'nav-bar',
-  components: {ModalWindow},
+  components: {ModalWindow,ConfirmModal},
   data() {
     return {
       displayModal: false,
       options: [],
-      cinemaId: 0
+      cinemaId: 0,
+      dialogModal: false
     }
   },
   methods: {
