@@ -21,7 +21,9 @@
                   occupied: seat.status === 3}"
                 @click="seat.status = (seat.status === 3) ? 1 : seat.status + 1; seat.changed = true"
             >
-              <h4 class="user-select-none">{{seat.column + 1}}</h4>
+              <h6 class="user-select-none">{{seat.row + 1}}</h6>
+              /
+              <h6 class="user-select-none">{{seat.column + 1}}</h6>
             </div>
           </div>
         </div>

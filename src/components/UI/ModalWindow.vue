@@ -1,5 +1,9 @@
 <template>
-  <div class="modal-window" v-if="show" @click.stop="hideModal">
+  <div
+      v-if="show"
+      class="modal-window"
+      style="z-index: 1031;"
+      @click.stop="hideModal">
     <div @click.stop class="modal-content temp">
       <slot></slot>
     </div>

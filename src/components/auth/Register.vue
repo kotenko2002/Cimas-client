@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <form @submit.prevent="handleSubmit">
-      <h3>Sing Up</h3>
+      <h3>Sign Up</h3>
       <div class="form-group">
         <label>Name</label>
         <input type="text" class="form-control" placeholder="Name" v-model="name">
