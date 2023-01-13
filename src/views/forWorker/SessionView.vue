@@ -22,7 +22,7 @@
                 @click="seat.status = (seat.status === 3) ? 1 : seat.status + 1; seat.changed = true"
             >
               <h6 class="user-select-none">{{seat.row + 1}}</h6>
-              /
+              <span class="user-select-none">/</span>
               <h6 class="user-select-none">{{seat.column + 1}}</h6>
             </div>
           </div>
@@ -99,17 +99,14 @@ export default {
 
 .free {
   background: #5290fd;
-
 }
 
 .booked {
-  background: #e7d40b;
-
+  background: #FFF200;
 }
 
 .occupied {
   background: #ff1616;
-
 }
 
 h4 {

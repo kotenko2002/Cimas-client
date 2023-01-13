@@ -36,7 +36,8 @@ axios.interceptors.response.use(
                 }
                 break;
             case 401:
-                errorToaster.show('You are not authorized');
+                localStorage.removeItem('token');
+                window.location.reload();
                 break;
             case 403:
                 errorToaster.show('You do not have permission to do this');
